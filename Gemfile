@@ -7,13 +7,20 @@ gem 'bootstrap-sass', '2.1'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-group :development do
+group :development, :test do
   gem 'rspec-rails', '2.11.0'
+end
+
+group :development do
   gem 'guard-rspec', '1.2.1'
   
   gem 'guard-spork', '1.2.0'
   gem 'childprocess', '0.3.6'
   gem 'spork', '0.9.2'
+  
+  gem 'growl', '1.0.3'
+  
+  gem 'annotate', '2.5.0'
 end
 
 
