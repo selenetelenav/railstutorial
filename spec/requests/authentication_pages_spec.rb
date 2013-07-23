@@ -87,6 +87,17 @@ describe "Authentication" do
           it { should have_selector('title', text: 'Sign in') }
         end
       end
+      
+      describe "when visiting a static page" do
+        before do
+          visit help_path
+        end
+        
+        it { should_not have_link('Users',    href: users_path) }
+        it { should_not have_link('Profile') }
+        it { should_not have_link('Settings') }
+        it { should_not have_link('Sign out', href: signout_path) }
+      end
     end
     
     describe "as wrong user" do
