@@ -168,6 +168,20 @@ describe "Authentication" do
         specify { response.should redirect_to(root_path) }
       end
     end
+    
+    describe "as admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      
+      before do
+        user.toggle!(:admin)
+        sign_in user
+      end
+      
+      describe "can't delete themselves" do
+        before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) }
+      end
+    end
   end
 
 end
