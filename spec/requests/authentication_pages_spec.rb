@@ -52,6 +52,24 @@ describe "Authentication" do
   end
   
   describe "authorization" do
+    
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in(user) }
+      describe "in the Users controller" do
+        describe "should not be able to see signup page" do
+          before { get signup_path }
+          specify { response.should redirect_to(root_path) }
+        end
+        
+        describe "should not be able to create new user" do
+          before { post users_path }
+          specify { response.should redirect_to(root_path) }
+        end
+      end
+          
+    end
+    
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
@@ -68,6 +86,15 @@ describe "Authentication" do
             page.should have_selector('title', text: 'Edit user')
           end
         end
+      end
+
+      describe "when visiting a static page" do
+        before { visit help_path }
+      
+        it { should_not have_link('Users',    href: users_path) }
+        it { should_not have_link('Profile') }
+        it { should_not have_link('Settings') }
+        it { should_not have_link('Sign out', href: signout_path) }
       end
 
       describe "in the Users controller" do
