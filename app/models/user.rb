@@ -30,6 +30,11 @@ class User < ActiveRecord::Base
     self.errors.messages.delete(:password_digest)
   end
   
+  def feed
+    # Preliminary until we add the "follow user" feature
+    Micropost.where("user_id = ?", id)
+  end
+  
   private
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
